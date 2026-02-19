@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env
+
+# Alembic / build
+*.log
+
+# Node (se lo userai)
+node_modules/
+
+# OS
+.DS_Store
+Thumbs.db
