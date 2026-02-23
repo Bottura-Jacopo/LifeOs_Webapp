@@ -23,3 +23,10 @@ class EventOut(BaseModel):
 
     class Config:
         from_attributes = True
+
+class EventUpdate(BaseModel):
+    type: str | None = Field(default=None, min_length=1, max_length=32)
+    start_time: datetime | None = None
+    end_time: datetime | None = None
+    score: int | None = Field(default=None, ge=1, le=5)
+    notes: str | None = None
