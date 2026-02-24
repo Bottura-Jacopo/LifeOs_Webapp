@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone  # <-- aggiunto timezone
 from fastapi import APIRouter, Depends, Query
 from sqlalchemy.orm import Session
 
@@ -27,16 +27,18 @@ def summary(
 
     events = q.all()
 
-    # Calcolo semplice: somma durata per type (solo se end_time esiste)
     totals_seconds: dict[str, int] = {}
     counts: dict[str, int] = {}
+
+    now = datetime.now(timezone.utc)
 
     for e in events:
         counts[e.type] = counts.get(e.type, 0) + 1
 
-        if e.end_time is None:
-            continue
-        duration = (e.end_time - e.start_time).total_seconds()
+        # <-- MODIFICA CHIAVE: se end_time è None (evento attivo), usa now
+        end = e.end_time or now
+
+        duration = (end - e.start_time).total_seconds()
         if duration < 0:
             continue
 

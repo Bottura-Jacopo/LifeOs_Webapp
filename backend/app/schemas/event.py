@@ -30,3 +30,12 @@ class EventUpdate(BaseModel):
     end_time: datetime | None = None
     score: int | None = Field(default=None, ge=1, le=5)
     notes: str | None = None
+
+class EventStart(BaseModel):
+    type: str = Field(..., min_length=1, max_length=32)
+    notes: str | None = None
+
+
+class EventStop(BaseModel):
+    score: int | None = Field(default=None, ge=1, le=5)
+    notes: str | None = None
